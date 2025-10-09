@@ -21,8 +21,8 @@ __global__ void naive_kernel(int M, int N, int K, float alpha,
                             float beta, float *C) {
     int BLOCKSIZE = 32;
     
-    const int row = blockIdx.x * BLOCKSIZE + threadIdx.x;
-    const int col = blockIdx.y * BLOCKSIZE + threadIdx.y;
+    const int row = blockIdx.x * BLOCKSIZE + (threadIdx.x / BLOCKSIZE);
+    const int col = blockIdx.y * BLOCKSIZE + (threadIdx.x % BLOCKSIZE);
     
     if (row < M && col < N) { // guard in case some threads are outside the range
         float tmp = 0.0;
@@ -122,7 +122,7 @@ int main() {
     
     // Launch kernel
     dim3 gridDim(CEIL_DIV(M, 32), CEIL_DIV(N, 32), 1);
-    dim3 blockDim(32, 32);
+    dim3 blockDim(32 * 32);
     
     std::cout << "Launching kernel with:" << std::endl;
     std::cout << "  Grid: (" << gridDim.x << ", " << gridDim.y << ", " << gridDim.z << ")" << std::endl;
@@ -182,4 +182,4 @@ int main() {
     std::cout << "\nDone!" << std::endl;
     
     return 0;
-}	
+}

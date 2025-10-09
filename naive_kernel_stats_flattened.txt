@@ -1,0 +1,108 @@
+==PROF== Connected to process 347292 (/teamspace/studios/this_studio/mat_mul_exp/matmul)
+Launching kernel with:
+  Grid: (16, 16, 1)
+  Block: (1024, 1, 1)
+  Matrix sizes: A(512x512), B(512x512), C(512x512)
+==PROF== Profiling "naive_kernel" - 0: 0%....50%....100% - 9 passes
+
+Kernel execution time: 320.257 ms
+Performance: 0.838188 GFLOPS
+
+Verifying result...
+Max error: 4.57764e-05
+Result is CORRECT!
+C (result, first 5x5):
+127.418 126.391 131.332 122.913 126.002 ...
+123.177 124.367 125.839 120.228 120.318 ...
+131.123 123.759 127.717 125.969 128.725 ...
+132.173 132.938 133.77 124.866 131.401 ...
+137.238 127.233 137.101 127.459 131.374 ...
+...
+
+
+Done!
+==PROF== Disconnected from process 347292
+[347292] matmul@127.0.0.1
+  naive_kernel(int, int, int, float, const float *, const float *, float, float *) (16, 16, 1)x(1024, 1, 1), Context 1, Stream 7, Device 0, CC 7.5
+    Section: GPU Speed Of Light Throughput
+    ----------------------- ----------- ------------
+    Metric Name             Metric Unit Metric Value
+    ----------------------- ----------- ------------
+    DRAM Frequency                  Ghz         4.99
+    SM Frequency                    Mhz       584.97
+    Elapsed Cycles                cycle       525119
+    Memory Throughput                 %        80.17
+    DRAM Throughput                   %         1.97
+    Duration                         us       897.66
+    L1/TEX Cache Throughput           %        87.98
+    L2 Cache Throughput               %         4.55
+    SM Active Cycles              cycle    478142.67
+    Compute (SM) Throughput           %        80.17
+    ----------------------- ----------- ------------
+
+    INF   The kernel is utilizing greater than 80.0% of the available compute or memory performance of the device. To   
+          further improve performance, work will likely need to be shifted from the most utilized to another unit.      
+          Start by analyzing workloads in the Compute Workload Analysis section.                                        
+
+    Section: Launch Statistics
+    -------------------------------- --------------- ---------------
+    Metric Name                          Metric Unit    Metric Value
+    -------------------------------- --------------- ---------------
+    Block Size                                                  1024
+    Function Cache Configuration                     CachePreferNone
+    Grid Size                                                    256
+    Registers Per Thread             register/thread              53
+    Shared Memory Configuration Size           Kbyte           32.77
+    Driver Shared Memory Per Block        byte/block               0
+    Dynamic Shared Memory Per Block       byte/block               0
+    Static Shared Memory Per Block        byte/block               0
+    # SMs                                         SM              40
+    Threads                                   thread          262144
+    Uses Green Context                                             0
+    Waves Per SM                                                6.40
+    -------------------------------- --------------- ---------------
+
+    Section: Occupancy
+    ------------------------------- ----------- ------------
+    Metric Name                     Metric Unit Metric Value
+    ------------------------------- ----------- ------------
+    Block Limit SM                        block           16
+    Block Limit Registers                 block            1
+    Block Limit Shared Mem                block           16
+    Block Limit Warps                     block            1
+    Theoretical Active Warps per SM        warp           32
+    Theoretical Occupancy                     %          100
+    Achieved Occupancy                        %        97.86
+    Achieved Active Warps Per SM           warp        31.32
+    ------------------------------- ----------- ------------
+
+    Section: GPU and Memory Workload Distribution
+    -------------------------- ----------- ------------
+    Metric Name                Metric Unit Metric Value
+    -------------------------- ----------- ------------
+    Average DRAM Active Cycles       cycle     88420.50
+    Total DRAM Elapsed Cycles        cycle     35852288
+    Average L1 Active Cycles         cycle    478142.67
+    Total L1 Elapsed Cycles          cycle     20989576
+    Average L2 Active Cycles         cycle    485113.09
+    Total L2 Elapsed Cycles          cycle     24559104
+    Average SM Active Cycles         cycle    478142.67
+    Total SM Elapsed Cycles          cycle     20989576
+    Average SMSP Active Cycles       cycle    477063.67
+    Total SMSP Elapsed Cycles        cycle     83958304
+    -------------------------- ----------- ------------
+
+    OPT   Est. Speedup: 7.748%                                                                                          
+          One or more SMs have a much higher number of active cycles than the average number of active cycles. Maximum  
+          instance value is 8.50% above the average, while the minimum instance value is 6.18% below the average.       
+    ----- --------------------------------------------------------------------------------------------------------------
+    OPT   Est. Speedup: 7.805%                                                                                          
+          One or more SMSPs have a much higher number of active cycles than the average number of active cycles.        
+          Maximum instance value is 8.59% above the average, while the minimum instance value is 6.32% below the        
+          average.                                                                                                      
+    ----- --------------------------------------------------------------------------------------------------------------
+    OPT   Est. Speedup: 7.748%                                                                                          
+          One or more L1 Slices have a much higher number of active cycles than the average number of active cycles.    
+          Maximum instance value is 8.50% above the average, while the minimum instance value is 6.18% below the        
+          average.                                                                                                      
+
