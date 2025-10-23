@@ -1,0 +1,6 @@
+## How to make matrix multiplications go fast
+We began with a naive kernel. In this setup we essentially very quickly hit the limits of memory bottlenecking us, and we needed better access patterns if we wants to go back to being compute bounded.
+
+Hence we implemented warp tiling. Warp tiling involves actually copying memory from GMEM to SMEM and allows for us to be able to rapidly improve our results with a significantly better memory access pattern.
+
+In an attempt to keep improving on memory access, I tried to pad the tiles so that we wouldn't have as many bank conflicts when accessing memory from our tiles. Future direcitons probably require some PTX and even more fine-tuned (to the a100 level) settings for the tiling. (TODO!)
