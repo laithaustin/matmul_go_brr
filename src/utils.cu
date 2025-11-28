@@ -26,9 +26,9 @@ void CudaDeviceInfo() {
     printf("Device ID: %d\n", deviceId);
     printf("  Name: %s\n", props.name);
     printf("  Compute Capability: %d.%d\n", props.major, props.minor);
-    printf("  Total Global Memory: %.2f GB\n", 
+    printf("  Total Global Memory: %.2f GB\n",
            props.totalGlobalMem / 1024.0 / 1024.0 / 1024.0);
-    printf("  Shared Memory per Block: %.2f KB\n", 
+    printf("  Shared Memory per Block: %.2f KB\n",
            props.sharedMemPerBlock / 1024.0);
     printf("  Max Threads per Block: %d\n", props.maxThreadsPerBlock);
     printf("  Multiprocessor Count: %d\n", props.multiProcessorCount);
@@ -93,10 +93,10 @@ float cpu_elapsed_time(float &beg, float &end) {
 
 // ==================== Kernel Dispatcher ====================
 
-void test_kernel(int kernel_num, int M, int N, int K, float alpha, 
+void test_kernel(int kernel_num, int M, int N, int K, float alpha,
                 float *A, float *B, float beta, float *C,
                 cublasHandle_t handle) {
-    
+
     switch (kernel_num) {
         case 0:
             // cuBLAS baseline
@@ -105,8 +105,8 @@ void test_kernel(int kernel_num, int M, int N, int K, float alpha,
             break;
         case 1:
             {
-                // Naive kernel - 32x32 thread blocks
-                dim3 blockDim(1024);
+                // Naive kernel - 32x32x1 thread blocks
+                dim3 blockDim(32, 32, 1);
                 dim3 gridDim(CEIL_DIV(M, 32), CEIL_DIV(N, 32));
                 mysgemm_v1<<<gridDim, blockDim>>>(M, N, K, alpha, A, B, beta, C);
             }
@@ -114,10 +114,9 @@ void test_kernel(int kernel_num, int M, int N, int K, float alpha,
         case 2:
             {
                 // Shared memory tiling kernel
-                const int BM = 128, BN = 128, BK = 8;
-                dim3 blockDim((BM * BN) / 64);
-                dim3 gridDim(CEIL_DIV(M, BM), CEIL_DIV(N, BN));
-                mysgemm_v2<BM, BN, BK, 64><<<gridDim, blockDim>>>(M, N, K, alpha, A, B, beta, C);
+                dim3 blockDim(1024);
+                dim3 gridDim(CEIL_DIV(M, 32), CEIL_DIV(N, 32));
+                mysgemm_v2<<<gridDim, blockDim>>>(M, N, K, alpha, A, B, beta, C);
             }
             break;
         case 3:

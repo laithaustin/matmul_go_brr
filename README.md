@@ -24,7 +24,13 @@ python3 plot.py 0 1      # Compare two kernels
 python3 plot.py          # Summary + all kernels
 ```
 
-## Worklog
+## Performance Results
+
+### Overview - All Kernels
+
+<img src="images/benchmark_results.png" width="900">
+
+This plot shows the performance progression across all implemented kernels. Each line represents a different optimization technique applied to the SGEMM operation.
 
 ### Kernel 0 vs Kernel 1 - cuBLAS vs Naive
 
