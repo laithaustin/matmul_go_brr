@@ -1,0 +1,54 @@
+# Build artifacts
+build/
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+sgemm
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+
+# CUDA compiled files
+*.ptx
+*.cubin
+*.fatbin
+
+# Test results and logs
+test/*.txt
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+.ipynb_checkpoints/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Profiling and debugging
+*.nvvp
+*.qdrep
+*.qdstrm
+nsight-*.txt
+*.prof
+
+# Archive (optional - uncomment if you don't want to track old files)
+# archive/
