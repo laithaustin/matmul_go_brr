@@ -113,8 +113,8 @@ void test_kernel(int kernel_num, int M, int N, int K, float alpha,
             break;
         case 2:
             {
-                // Shared memory tiling kernel
-                dim3 blockDim(1024);
+                // Introduce Global Coalescing
+                dim3 blockDim(32*32);
                 dim3 gridDim(CEIL_DIV(M, 32), CEIL_DIV(N, 32));
                 mysgemm_v2<<<gridDim, blockDim>>>(M, N, K, alpha, A, B, beta, C);
             }
@@ -122,10 +122,9 @@ void test_kernel(int kernel_num, int M, int N, int K, float alpha,
         case 3:
             {
                 // 1D thread tile kernel
-                const int BM = 128, BN = 128, BK = 8, TM = 8;
-                dim3 blockDim((BM * BN) / TM);
-                dim3 gridDim(CEIL_DIV(M, BM), CEIL_DIV(N, BN));
-                mysgemm_v3<BM, BN, BK, TM><<<gridDim, blockDim>>>(M, N, K, alpha, A, B, beta, C);
+                dim3 blockDim(32*32);
+                dim3 gridDim(CEIL_DIV(M, 32), CEIL_DIV(N, 32));
+                mysgemm_v3<32><<<gridDim, blockDim>>>(M, N, K, alpha, A, B, beta, C);
             }
             break;
         case 4:

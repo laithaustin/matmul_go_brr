@@ -32,10 +32,6 @@ python3 plot.py          # Summary + all kernels
 
 This plot shows the performance progression across all implemented kernels. Each line represents a different optimization technique applied to the SGEMM operation.
 
-### Kernel 0 vs Kernel 1 - cuBLAS vs Naive
-
-<img src="images/kernel_cublas_vs_1.png" width="800">
-
 **Results (NVIDIA A10)**:
 - cuBLAS: ~14.6 TFLOPS avg, 18.7 TFLOPS peak
 - Naive: ~1.5 TFLOPS avg, 1.9 TFLOPS peak
