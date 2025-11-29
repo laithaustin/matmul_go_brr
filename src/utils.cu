@@ -124,6 +124,11 @@ void test_kernel(int kernel_num, int M, int N, int K, float alpha,
                 // 1D thread tile kernel
                 dim3 blockDim(32*32);
                 dim3 gridDim(CEIL_DIV(M, 32), CEIL_DIV(N, 32));
+                // since we are only accessing GMEM via SMEM we can carve out more SMEM space
+                // for L1 cache here!
+                cudaFuncSetAttribute(mysgemm_v3<32>,
+                                     cudaFuncAttributePreferredSharedMemoryCarveout,
+                                     cudaSharedmemCarveoutMaxShared);
                 mysgemm_v3<32><<<gridDim, blockDim>>>(M, N, K, alpha, A, B, beta, C);
             }
             break;
