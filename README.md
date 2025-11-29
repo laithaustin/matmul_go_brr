@@ -98,12 +98,3 @@ Shared Memory:     8.19 KB static/block
 Registers/Thread:  36
 Waves Per SM:      227.56
 ```
-
-### Recommended Optimizations (Priority Order)
-
-1. **Fix shared memory access patterns** - eliminate bank conflicts
-2. **Vectorize memory operations** - use `float4` for wider loads
-3. **Reduce register usage** - aim for <32 registers/thread
-4. **Improve global memory access patterns** - increase L1 cache hits
-
-**Estimated Speedup Potential**: 15-92% from addressing these bottlenecks
