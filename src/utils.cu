@@ -121,7 +121,7 @@ void test_kernel(int kernel_num, int M, int N, int K, float alpha,
             break;
         case 3:
             {
-                // 1D thread tile kernel
+                // SMEM Blocking
                 dim3 blockDim(32*32);
                 dim3 gridDim(CEIL_DIV(M, 32), CEIL_DIV(N, 32));
                 // since we are only accessing GMEM via SMEM we can carve out more SMEM space
@@ -134,11 +134,11 @@ void test_kernel(int kernel_num, int M, int N, int K, float alpha,
             break;
         case 4:
             {
-                // 2D thread tile kernel
-                const int BM = 128, BN = 128, BK = 8, TM = 8, TN = 8;
-                dim3 blockDim((BM * BN) / (TM * TN));
+                // 1D block tiling
+                const int BM = 64, BN = 64, BK = 8, TM = 8;
+                dim3 blockDim((BM * BN) / (TM));
                 dim3 gridDim(CEIL_DIV(M, BM), CEIL_DIV(N, BN));
-                mysgemm_v4<BM, BN, BK, TM, TN><<<gridDim, blockDim>>>(M, N, K, alpha, A, B, beta, C);
+                mysgemm_v4<BM, BN, BK, TM><<<gridDim, blockDim>>>(M, N, K, alpha, A, B, beta, C);
             }
             break;
         case 5:

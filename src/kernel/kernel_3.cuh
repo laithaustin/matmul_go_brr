@@ -22,8 +22,8 @@ __global__ void mysgemm_v3(int M, int N, int K, float alpha, float *A,
     __shared__ float Bs[BLOCKSIZE * BLOCKSIZE];
 
     // get row and col for the block
-    uint cRow = blockIdx.x;
-    uint cCol = blockIdx.y;
+    uint cRow = blockIdx.y;
+    uint cCol = blockIdx.x;
     uint threadRow = threadIdx.x / BLOCKSIZE;
     uint threadCol = threadIdx.x % BLOCKSIZE;
 
